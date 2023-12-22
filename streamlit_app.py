@@ -48,7 +48,7 @@ for i in range(1, 11):
 
 df = pd.DataFrame(schedule, columns=["Year", "Revenues", "Free Cash Flow", "Dividends"])
 FCF_t = fcf_f * t_m
-div_t = fcf_f * ((1+(r/100))**(-10))
+div_t = FCF_t * ((1+(r/100))**(-10))
 
 intrinsic_value = df["Dividends"].sum()+div_t
 price_target = (current_price * intrinsic_value) / mkt
