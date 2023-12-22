@@ -53,11 +53,8 @@ div_t = FCF_t * ((1+(r/100))**(-10))
 intrinsic_value = df["Dividends"].sum()+div_t
 price_target = (current_price * intrinsic_value) / mkt
 
-st.bar_chart(df["Revenues"])
-st.bar_chart(df["Free Cash Flow"])
-st.bar_chart(df["Dividends"])
+st.write("### Results")
 
-st.success(str(intrinsic_value))
-st.success(str(price_target))
+st.write("The price target is" price_target) 
 
 
