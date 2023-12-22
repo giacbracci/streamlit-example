@@ -24,6 +24,7 @@ t_m = col2.number_input("Terminal multiple", min_value=0.0, format="%.2f", value
 schedule = []
 # remaining_balance = loan_amount
 rev_start = rev
+fcf_start = fcf
 div_fcf = div/fcf
 
 for i in range(1, 12):
@@ -35,7 +36,7 @@ for i in range(1, 12):
     if i<=10:
         fcf_f = rev_f * (fcf_m/100)
     else:
-        fcf_f = rev_f * (t_m/100)
+        fcf_f = fcf_start * (t_m/100)
 
     if i<=10:
         div_s = fcf_f * ((1+(r/100))**(1-i-1))
@@ -45,6 +46,7 @@ for i in range(1, 12):
         div_f = div_s
     
     rev_start = rev_f
+    fcf_start = fcf_f
     schedule.append(
         [
             i,
