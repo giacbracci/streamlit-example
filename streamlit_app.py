@@ -27,26 +27,16 @@ rev_start = rev
 fcf_start = fcf
 div_fcf = div/fcf
 
-for i in range(1, 12):
+for i in range(1, 11):
     if i <= 5:
         rev_f = rev_start * (1 + (rev_h5 / 100))
     else:
         rev_f = rev_start * (1 + (rev_h10 / 100))
-        
-    if i<=10:
-        fcf_f = rev_f * (fcf_m/100)
-    else:
-        fcf_f = fcf_start * t_m
-
-    if i<=10:
-        div_s = fcf_f * ((1+(r/100))**(1-i-1))
-        div_f = div_s * div_fcf
-    else:
-        div_f = fcf_start * t_m * ((1+(r/100))**(1-i-1))
-        #div_f = div_s
     
+    fcf_f = rev_f * (fcf_m/100)
+    div_s = fcf_f * ((1+(r/100))**(1-i-1))
+    div_f = div_s * div_fcf
     rev_start = rev_f
-    fcf_start = fcf_f
     schedule.append(
         [
             i,
@@ -57,8 +47,10 @@ for i in range(1, 12):
     )
 
 df = pd.DataFrame(schedule, columns=["Year", "Revenues", "Free Cash Flow", "Dividends"])
+FCF_t = fcf_f * t_m
+div_t = fcf_f * ((1+(r/100))**(-10))
 
-intrinsic_value = df["Dividends"].sum()
+intrinsic_value = df["Dividends"].sum()+div_t
 price_target = (current_price * intrinsic_value) / mkt
 
 st.bar_chart(df["Revenues"])
