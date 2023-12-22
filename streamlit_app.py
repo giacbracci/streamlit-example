@@ -42,8 +42,8 @@ for i in range(1, 12):
         div_s = fcf_f * ((1+(r/100))**(1-i-1))
         div_f = div_s * div_fcf
     else:
-        div_s = fcf_f * ((1+(r/100))**(1-i-1))
-        div_f = div_s
+        div_f = fcf_f * ((1+(r/100))**(1-i-1))
+        #div_f = div_s
     
     rev_start = rev_f
     fcf_start = fcf_f
