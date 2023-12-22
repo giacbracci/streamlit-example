@@ -32,13 +32,18 @@ for i in range(1, 11):
     else:
         rev_f = rev_start * (1 + (rev_h10 / 100))
         
-    if i<11:
+    if i<=10:
         fcf_f = rev_f * (fcf_m/100)
     else:
         fcf_f = rev_f * t_m
 
-    div_s = fcf_f * ((1+(r/100))**(1-i-1))
-    div_f = div_s * div_fcf
+    if i<=10:
+        div_s = fcf_f * ((1+(r/100))**(1-i-1))
+        div_f = div_s * div_fcf
+    else:
+        div_s = fcf_f * ((1+(r/100))**(1-i-1))
+        div_f = div_s
+    
     rev_start = rev_f
     schedule.append(
         [
