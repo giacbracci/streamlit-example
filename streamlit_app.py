@@ -8,17 +8,17 @@ st.title("FEF Academy Stock Price Fair Value Calculator")
 
 st.write("### Input Data")
 col1, col2 = st.columns(2)
-rev = col1.number_input("2023 Revenues (bn $)", min_value=0.0, format="%.2f")
-fcf = col1.number_input("2023 Free Cash Flow (billion $)", min_value=0.0, format="%.2f")
-div = col1.number_input("2023 Dividends (billion $)", min_value=0.0, format="%.2f")
-mkt = col1.number_input("2023 Market Capitalization (billion $)", min_value=0.0, format="%.2f")
-current_price = col1.number_input("Current Price", min_value=0.0, format="%.2f")
+rev = col1.number_input("2023 Revenues (bn $)", min_value=0.0, format="%.2f", value=None)
+fcf = col1.number_input("2023 Free Cash Flow (billion $)", min_value=0.0, format="%.2f", value=None)
+div = col1.number_input("2023 Dividends (billion $)", min_value=0.0, format="%.2f", value=None)
+mkt = col1.number_input("2023 Market Capitalization (billion $)", min_value=0.0, format="%.2f", value=None)
+current_price = col1.number_input("Current Price", min_value=0.0, format="%.2f", value=None)
 
-rev_h5 = col2.number_input("Revenue growth in next 5 years (%)", min_value=0.0, format="%.2f")
-rev_h10 = col2.number_input("Revenue growth in 5 to 10 years (%)", min_value=0.0, format="%.2f")
-fcf_m = col2.number_input("FCF margin", min_value=0.0, format="%.2f")
-r = col2.number_input("Discount rate", min_value=0.0, format="%.2f")
-t_m = col2.number_input("Terminal multiple", min_value=0.0, format="%.2f")
+rev_h5 = col2.number_input("Revenue growth in next 5 years (%)", min_value=0.0, format="%.2f", value=None)
+rev_h10 = col2.number_input("Revenue growth in 5 to 10 years (%)", min_value=0.0, format="%.2f", value=None)
+fcf_m = col2.number_input("FCF margin", min_value=0.0, format="%.2f", value=None)
+r = col2.number_input("Discount rate", min_value=0.0, format="%.2f", value=None)
+t_m = col2.number_input("Terminal multiple", min_value=0.0, format="%.2f", value=None)
 
 # Create a data-frame with the REV-FCF-Div schedule.
 schedule = []
