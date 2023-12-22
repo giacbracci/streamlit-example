@@ -2,39 +2,61 @@ import altair as alt
 import numpy as np
 import pandas as pd
 import streamlit as st
+import math
 
-"""
-# Welcome to Streamlit!
+st.title("FEF Academy Stock Price Fair Value Calculator")
 
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
+st.write("### Input Data")
+col1, col2 = st.columns(2)
+rev = col1.number_input("2023 Revenues (billion $)", min_value=0, value=228.96)
+fcf = col1.number_input("2023 Free Cash Flow (billion $)", min_value=0, value=9.56)
+div = col1.number_input("2023 Dividends (billion $)", min_value=0, value=5.87)
+mkt = col1.number_input("2023 Market Capitalization (billion $)", min_value=0, value=68.4)
+current_price = col1.number_input("Current Price", min_value=0, value=11.19)
 
-In the meantime, below is an example of what you can do with just a few lines of code:
-"""
+rev_h5 = col2.number_input("Revenue growth in next 5 years (%)", min_value=0, value=3)
+rev_h10 = col2.number_input("Revenue growth in 5 to 10 years (%)", min_value=0, value=3)
+fcf_m = col2.number_input("FCF margin", min_value=0, value=4)
+r = col2.number_input("Discount rate", min_value=0, value=10)
+t_m = col2.number_input("Terminal multiple", min_value=0, value=9)
 
-num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+# Create a data-frame with the REV-FCF-Div schedule.
+schedule = []
+# remaining_balance = loan_amount
+rev_start = rev
 
-indices = np.linspace(0, 1, num_points)
-theta = 2 * np.pi * num_turns * indices
-radius = indices
+for i in range(1, 11):
+    if i < 6:
+        rev_f = rev_start * (1+(rev_h5/100))
+        fcf_f = rev_f * (fcf_m/100)
+        div_f = fcf_f * (1+(r/100))^(i-2) * (div/fcf)
+        rev_start = rev_f
+    elif i > 6 and i < 11:
+        rev_f = rev_start * (1+(rev_h5/100))
+        fcf_f = rev_f * (fcf_m/100)
+        div_f = fcf_f * (1+(r/100))^(i-2) * (div/fcf)
+        rev_start = rev_f
+    elif i=11:
+        rev_f = rev_start
+        fcf_f = rev_f * t_m
+    schedule.append(
+        [
+            i,
+            rev_f,
+            fcf_f,
+            div_f,
+        ]
+    )
 
-x = radius * np.cos(theta)
-y = radius * np.sin(theta)
+df = pd.DataFrame(
+    schedule,
+    columns=["Year", "Revenues", "Free Cash Flow", "Dividends"],
+    index_col=0
+)
 
-df = pd.DataFrame({
-    "x": x,
-    "y": y,
-    "idx": indices,
-    "rand": np.random.randn(num_points),
-})
+intrinsic_value = df["Dividends"].sum()
+price_target = (current_price * intrinsic_value) / mkt
 
-st.altair_chart(alt.Chart(df, height=700, width=700)
-    .mark_point(filled=True)
-    .encode(
-        x=alt.X("x", axis=None),
-        y=alt.Y("y", axis=None),
-        color=alt.Color("idx", legend=None, scale=alt.Scale()),
-        size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-    ))
+st.success(str(price_target))
+
+
