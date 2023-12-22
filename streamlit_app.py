@@ -54,11 +54,7 @@ for i in range(1, 11):
         ]
     )
 
-df = pd.DataFrame(
-    schedule,
-    columns=["Year", "Revenues", "Free Cash Flow", "Dividends"],
-    index_col=0
-)
+df = pd.DataFrame(schedule, columns=["Year", "Revenues", "Free Cash Flow", "Dividends"], index_col=0)
 
 intrinsic_value = df["Dividends"].sum()
 price_target = (current_price * intrinsic_value) / mkt
