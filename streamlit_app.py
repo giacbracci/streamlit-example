@@ -8,7 +8,7 @@ st.title("FEF Academy Stock Price Fair Value Calculator")
 
 st.write("### Input Data")
 col1, col2 = st.columns(2)
-rev = col1.number_input("2023 Revenues (billion $)", min_value=0, value=228.96)
+rev = col1.number_input("2023 Revenues (bn $)", min_value=0, value=228.96)
 fcf = col1.number_input("2023 Free Cash Flow (billion $)", min_value=0, value=9.56)
 div = col1.number_input("2023 Dividends (billion $)", min_value=0, value=5.87)
 mkt = col1.number_input("2023 Market Capitalization (billion $)", min_value=0, value=68.4)
