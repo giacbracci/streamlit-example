@@ -26,7 +26,7 @@ schedule = []
 rev_start = rev
 div_fcf = div/fcf
 
-for i in range(1, 11):
+for i in range(1, 12):
     if i <= 5:
         rev_f = rev_start * (1 + (rev_h5 / 100))
     else:
