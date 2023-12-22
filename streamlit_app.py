@@ -36,7 +36,7 @@ for i in range(1, 12):
     if i<=10:
         fcf_f = rev_f * (fcf_m/100)
     else:
-        fcf_f = fcf_start * (t_m/100)
+        fcf_f = fcf_start * t_m
 
     if i<=10:
         div_s = fcf_f * ((1+(r/100))**(1-i-1))
