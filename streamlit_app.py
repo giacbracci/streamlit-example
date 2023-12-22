@@ -34,7 +34,7 @@ for i in range(1, 11):
     elif i > 6 and i < 11:
         rev_f = rev_start * (1+(rev_h5/100))
         fcf_f = rev_f * (fcf_m/100)
-        div_f = fcf_f * (1+(r/100))^(i-2) * (div/fcf)
+        div_f = fcf_f * ((1+(r/100))^(i-2)) * (div/fcf)
         rev_start = rev_f
     else:
         rev_f = rev_start
