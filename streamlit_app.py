@@ -24,22 +24,27 @@ t_m = col2.number_input("Terminal multiple", min_value=0)
 schedule = []
 # remaining_balance = loan_amount
 rev_start = rev
+div_fcf = div/fcf
 
 for i in range(1, 11):
     if i < 6:
         rev_f = rev_start * (1+(rev_h5/100))
         fcf_f = rev_f * (fcf_m/100)
-        div_f = fcf_f * ((1+(r/100))^(i-2)) * (div/fcf)
+        div_s = fcf_f * ((1+(r/100))^(i-2))
+        div_f = div_s * div_fcf
         rev_start = rev_f
     elif i > 6 and i < 11:
         rev_f = rev_start * (1+(rev_h5/100))
         fcf_f = rev_f * (fcf_m/100)
-        div_f = fcf_f * ((1+(r/100))^(i-2)) * (div/fcf)
+        div_s = fcf_f * ((1+(r/100))^(i-2))
+        div_f = div_s * div_fcf
         rev_start = rev_f
     else:
         rev_f = rev_start
         fcf_f = rev_f * t_m
-        div_f = fcf_f * ((1+(r/100))^(i-2)) * (div/fcf)
+        div_s = fcf_f * ((1+(r/100))^(i-2))
+        div_f = div_s * div_fcf
+        rev_start = rev_f
     schedule.append(
         [
             i,
