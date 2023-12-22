@@ -58,6 +58,8 @@ df = pd.DataFrame(schedule, columns=["Year", "Revenues", "Free Cash Flow", "Divi
 
 intrinsic_value = df["Dividends"].sum()
 price_target = (current_price * intrinsic_value) / mkt
+
+st.bar_chart(df)
 st.success(str(intrinsic_value))
 st.success(str(price_target))
 
