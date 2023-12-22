@@ -52,9 +52,10 @@ div_t = FCF_t * ((1+(r/100))**(-10))
 
 intrinsic_value = df["Dividends"].sum()+div_t
 price_target = (current_price * intrinsic_value) / mkt
+delta_price = price_target - current_price
 
 st.write("### Results")
 
-st.write("The price target is" price_target) 
+st.metric(label="Target Price", value=price_target, delta=delta_price)
 
 
