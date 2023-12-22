@@ -56,6 +56,6 @@ delta_price = price_target - current_price
 
 st.write("### Results")
 
-st.metric(label="Target Price", value=price_target, delta=delta_price)
+st.metric(label="Target Price", value=round(price_target,2), delta=round(delta_price,2))
 
 
