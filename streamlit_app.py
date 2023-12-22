@@ -14,11 +14,11 @@ div = col1.number_input("2023 Dividends (billion $)", min_value=0.0, format="%.2
 mkt = col1.number_input("2023 Market Capitalization (billion $)", min_value=0.0, format="%.2f", value=68.4)
 current_price = col1.number_input("Current Price", min_value=0.0, format="%.2f", value=11.19)
 
-rev_h5 = col2.number_input("Revenue growth in next 5 years (%)", min_value=0.0, format="%.2f", value=3)
-rev_h10 = col2.number_input("Revenue growth in 5 to 10 years (%)", min_value=0.0, format="%.2f", value=3)
-fcf_m = col2.number_input("FCF margin", min_value=0.0, format="%.2f", value=4)
-r = col2.number_input("Discount rate", min_value=0.0, format="%.2f", value=10)
-t_m = col2.number_input("Terminal multiple", min_value=0.0, format="%.2f", value=9)
+rev_h5 = col2.number_input("Revenue growth in next 5 years (%)", min_value=0.0, format="%.2f", value=3.0)
+rev_h10 = col2.number_input("Revenue growth in 5 to 10 years (%)", min_value=0.0, format="%.2f", value=3.0)
+fcf_m = col2.number_input("FCF margin", min_value=0.0, format="%.2f", value=4.0)
+r = col2.number_input("Discount rate", min_value=0.0, format="%.2f", value=10.0)
+t_m = col2.number_input("Terminal multiple", min_value=0.0, format="%.2f", value=9.0)
 
 # Create a data-frame with the REV-FCF-Div schedule.
 schedule = []
