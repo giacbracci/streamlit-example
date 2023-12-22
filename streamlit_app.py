@@ -36,7 +36,7 @@ for i in range(1, 11):
         fcf_f = rev_f * (fcf_m/100)
         div_f = fcf_f * (1+(r/100))^(i-2) * (div/fcf)
         rev_start = rev_f
-    elif i=11:
+    else
         rev_f = rev_start
         fcf_f = rev_f * t_m
     schedule.append(
