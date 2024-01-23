@@ -1,23 +1,11 @@
-import streamlit as st 
-import requests
+import streamlit as st, pandas as pd, numpy as np, yfinance as yf
+import plotly.express as px
 
-#Initial UI
-ticker = st.text_input('Ticker', "NFLX").upper()
-buttonClicked = st.button('Set')
+st.title('FEF Academy Stock Price Valuation Model')
+ticker = st.sidebar.text_input('Ticker')
+start_date = st.sidebar.date_input('Start Date')
+end_date = st.sidebar.date_input('End Date')
 
-#Callbacks
-if buttonClicked:
-  requestString = f"""https://query1.finance.yahoo.com/v10/...{ticker}?modules=assetProfile%2Cprice"""
-  request = requests.get(f"{requestString}", headers={"USER-AGENT": "Mozilla/5.0"})
-  json = request.json()
-  data = json["quoteSummary"]["result"][0]
-
-  st.header("Profile")
-
-  st.metric("sector", data["assetProfile"]["sector"])
-  st.metric("industry", data["assetProfile"]["industry"])
-  st.metric("website", data["assetProfile"]["website"])
-  st.metric("marketCap", data["price"]["marketCap"]["fmt"])
-
-  with st.expander("About Company"):
-    st.write(data["assetProfile"]["longBusinessSummary"])
+data = yf.download(ticker,start=start_date,end=end_date)
+fig = px.line(data, x=data.index, y=data['Adj Close'], title = ticker)
+st.plotly_chart(fig)
