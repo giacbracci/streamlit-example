@@ -1,14 +1,50 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 import yfinance as yf
-import plotly.express as px
+import pandas as pd
+from functools import lru_cache
 
-st.title('FEF Academy Stock Price Valuation Model')
-ticker = st.sidebar.text_input('Ticker')
-start_date = st.sidebar.date_input('Start Date')
-end_date = st.sidebar.date_input('End Date')
+@lru_cache(maxsize=32)
+def get_stock_data(ticker, period):
+    stock = yf.Ticker(ticker)
+    if period == "LTM":
+        return stock.history(period="1y")
+    elif period == "5Y":
+        return stock.history(period="5y")
+    elif period == "10Y":
+        return stock.history(period="10y")
+    else:
+        return None
 
-data = yf.download(ticker,start=start_date,end=end_date)
-fig = px.line(data, x=data.index, y=data['Adj Close'], title = ticker)
-st.plotly_chart(fig)
+@lru_cache(maxsize=32)
+def get_fundamental_metrics(ticker):
+    stock = yf.Ticker(ticker)
+    info = stock.info
+    return {
+        "Market Cap": info.get("marketCap"),
+        "PE Ratio": info.get("trailingPE"),
+        "EPS": info.get("trailingEps"),
+        "Price to Book": info.get("priceToBook"),
+        "Dividend Yield": info.get("dividendYield")
+    }
+
+def main():
+    st.title("Stock Valuation App")
+
+    ticker = st.text_input("Enter Stock Ticker", "AAPL")
+    period = st.selectbox("Select Period", ["LTM", "5Y", "10Y"])
+
+    if st.button("Get Stock Data"):
+        data = get_stock_data(ticker, period)
+        metrics = get_fundamental_metrics(ticker)
+
+        if data is not None:
+            st.subheader(f"{ticker} Stock Data for {period}")
+            st.line_chart(data['Close'])
+
+            st.subheader("Fundamental Metrics")
+            for key, value in metrics.items():
+                st.write(f"{key}: {value}")
+
+if __name__ == "__main__":
+    main()
+
